@@ -63,7 +63,7 @@ typings/
 ### Example user template
 
 # IntelliJ project files
-.idea
+.idea/
 *.iml
 out
 gen### Example user template template
