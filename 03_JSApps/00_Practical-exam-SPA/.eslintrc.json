@@ -1,0 +1,28 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "syntax_map": {
+        "JavaScript (Babel)": "javascript",
+    },
+    "extends": "eslint:recommended",
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "linebreak-style": [
+            "1",
+            "unix"
+        ],
+        "quotes": [
+            "1",
+            "single"
+        ]
+    }
+}

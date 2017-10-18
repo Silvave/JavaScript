@@ -1,0 +1,29 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "modules",
+  "main": "index.js",
+  "dependencies": {
+    "chai": "^3.5.0",
+    "deep-eql": "^2.0.1",
+    "eslint-config-defaults": "^9.0.0",
+    "eslint-config-rallycoding": "^3.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "type-detect": "^4.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-register": "^6.26.0",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

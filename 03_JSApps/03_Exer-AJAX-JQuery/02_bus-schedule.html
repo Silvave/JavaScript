@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bus Schedule</title>
+    <style>
+        #schedule { text-align: center; width: 400px; }
+        input { width: 120px; }
+        #info { background-color:aquamarine; border:1px solid black; margin:0.25em; }
+        .info { font-size: 1.5em; padding: 0.25em; }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="schedule">
+    <div id="info"><span class="info">Not Connected</span></div>
+    <div id="controls">
+        <input id="depart" value="Depart" type="button" onclick="result.depart()">
+        <input id="arrive" value="Arrive" type="button" onclick="result.arrive()" disabled="true">
+    </div>
+</div>
+<script>
+    function solve() {
+        let currentStop = "";
+        let nextStopId = "depot";
+
+        function displayBusStop(stopId) {
+            currentStop = stopId.name;
+            nextStopId = stopId.next;
+
+            $('#info').find('span').text(`Next stop ${currentStop}`);
+            $('#arrive').prop('disabled', false)
+        }
+        
+        function displayErr(err) {
+            $('#info').find('span').text(`Error`);
+            $('#depart').prop('disabled', true);
+            $('#arrive').prop('disabled', true);
+        }
+
+        function depart() {
+            $('#depart').prop('disabled', true);
+
+            const url = `https://judgetests.firebaseio.com/schedule/${nextStopId}.json`;
+
+            $.get(url)
+                .then(displayBusStop)
+                .catch(displayErr)
+        }
+
+        function arrive() {
+            $('#arrive').prop('disabled', true);
+            $('#info').find('span').text(`Arriving at ${currentStop}`);
+            $('#depart').prop('disabled', false);
+        }
+
+        return {
+            depart,
+            arrive
+        };
+    }
+    let result = solve();
+</script>
+</body>
+</html>

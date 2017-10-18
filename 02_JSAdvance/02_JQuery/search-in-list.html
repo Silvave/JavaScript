@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search in list</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <ul id="towns">
+        <li>Sofiq</li>
+        <li>Plovdiv</li>
+        <li>Burgas</li>
+        <li>Varna</li>
+        <li>Kazanlyk</li>
+        <li>Vidin</li>
+        <li>Kalofer</li>
+    </ul>
+    <input type="text" id="searchText" />
+    <button onclick="search()">Search</button>
+    <div id="result"></div>
+<script>
+    function search() {
+        let searchText = $(`#searchText`).val();
+        let matches = 0;
+        let foundText = $(`ul#towns li`)
+                .each((index, item) => {
+                    if (searchText !== "" && item.textContent.includes(searchText)){
+                        $(item).css("font-weight", "bold");
+                        matches++;
+                    } else {
+                        $(item).css("font-weight", "")
+                    }
+                });
+        if (matches > 0)
+            $(`#result`).text(matches + ` found matches`);
+        else
+            $(`#result`).text(`There is no matches found`);
+
+        console.log(foundText)
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phonebook</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Phonebook</h1>
+    <ul id="phonebook"></ul>
+    <button id="btnLoad">Load</button>
+
+    <h2>Create Contact</h2>
+    Person: <input type="text" id="person" />
+    <br>
+    Phone: <input type="text" id="phone" />
+    <br>
+    <button id="btnCreate">Create</button>
+    <script>
+        $(function () {
+            $('#btnLoad').click(loadContacts);
+            $('#btnCreate').click(createContact);
+
+            let baseServiceUrl = `https://phonebook-15272.firebaseio.com/phonebook`;
+
+            function loadContacts() {
+                $('#phonebook').empty();
+                $.get(baseServiceUrl + ".json")
+                    .then(displayContacts)
+                    .catch(displayErr)
+            }
+            
+            function displayContacts(allContacts) {
+//                for (let contact in allContacts) {
+//                    let person = allContacts[contact].person;
+//                    let phone =  allContacts[contact].phone;
+//                    let li = $('<li>').text(`${person}: ${phone}`);
+//                    let linkDel = $('<a>').text(` [Delete]`).attr('href', `#`)
+//                        .click(() => deleteContact(contact));
+//                    li.append(linkDel)
+//                    $('#phonebook').append(li);
+//                }
+
+                $('#phonebook').append(Object.keys(allContacts).map(key => $('<li>')
+                    .text(`${allContacts[key].person}: ${allContacts[key].phone}`)
+                    .append($('<a>').text(" [Delete]")
+                                    .attr('href', "#")
+                                    .click(() => deleteContact(key)))))
+            }
+
+            function displayErr(err) {
+                $('#phonebook').append($('<li>').text("Error"))
+            }
+
+            function deleteContact(contact) {
+                let request = {
+                    method: "DELETE",
+                    url: baseServiceUrl + `/${contact}.json`
+                };
+                $.ajax(request)
+                    .then(loadContacts)
+                    .catch(displayErr)
+            }
+
+            function createContact() {
+                let person = $('#person').val();
+                let phone = $('#phone').val();
+
+                $('#person').val(``);
+                $('#phone').val(``);
+
+                let newContact = JSON.stringify({
+                    person: person,
+                    phone: phone
+                });
+
+                let request = {
+                    method: "POST",
+                    url: baseServiceUrl + ".json",
+                    data: newContact
+                };
+
+//                $.ajax(request)
+//                    .then(loadContacts)
+//                    .catch(displayErr);
+
+                $.post(baseServiceUrl + ".json", newContact)
+                    .then(loadContacts)
+                    .catch(displayErr)
+            }
+
+
+        });
+    </script>
+</body>
+</html>

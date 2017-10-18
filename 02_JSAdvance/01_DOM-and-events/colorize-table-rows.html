@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paint table</title>
+</head>
+<body>
+    <table>
+        <tr><th>Name</th><th>Town</th></tr>
+        <tr><td>Eve</td><td>Sofia</td></tr>
+        <tr><td>Nick</td><td>Varna</td></tr>
+        <tr><td>Didi</td><td>Ruse</td></tr>
+        <tr><td>Tedy</td><td>Varna</td></tr>
+        <tr><td>Eve</td><td>Sofia</td></tr>
+        <tr><td>Nick</td><td>Varna</td></tr>
+        <tr><td>Didi</td><td>Ruse</td></tr>
+        <tr><td>Tedy</td><td>Varna</td></tr>
+    </table>
+    <button onclick="colorize()">Colorize</button>
+    <script>
+        function colorize() {
+            let rows = [...document.querySelectorAll("table tr")].slice(1);
+            let counterRow = 1;
+            for (let row of rows) {
+                if (counterRow % 2 === 1)
+                    row.style.background = "Teal";
+                counterRow++;
+            }
+        }
+    </script>
+</body>
+</html>

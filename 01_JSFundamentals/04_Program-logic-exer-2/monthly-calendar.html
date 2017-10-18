@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Monthly Calendar</title>
+    <style>
+        .prev-month, .next-month { color: #CCC }
+        .today { font-weight: bold; background: #DDD; }
+        .title { background: #AAAAFF; margin: 10px 0; padding:5px }
+        table { border: 1px solid #CCC;}
+        td { text-align: center; }
+        #calendarCode { width: 100%; }
+    </style>
+    <script>
+        function calendar([day, month, year])
+        {
+            day = Number(day)
+            month = Number(month)
+            year = Number(year)
+
+            let prevMonthLastDayNumber = new Date(year, month - 1, 1).getUTCDate()
+            let monthFirstDay = new Date(year, month - 1, 2).getUTCDay()
+            let monthLastDayNumber = new Date(year, month, 1).getUTCDate()
+
+            let weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+            // Draw Table
+            let table = document.createElement('table')
+            let tableHead = document.createElement('thead')
+            let tableBody = document.createElement('tbody')
+
+            // Head row
+            let tableHeaderRow = document.createElement('tr');
+            for (let i = 0; i < weekDays.length; i++) {
+                let day = weekDays[i]
+
+                let headerTableElem = document.createElement('th')
+                headerTableElem.innerHTML = day
+
+                tableHeaderRow.appendChild(headerTableElem)
+            }
+            tableHead.appendChild(tableHeaderRow)
+
+            // Main part - calendar
+            let weekCount = 0
+            let mainCalendarDaysRow
+            for (let i = 1; i <= monthLastDayNumber || weekCount % 7 !== 0; i++) {
+                if (weekCount % 7 === 0) {
+                    mainCalendarDaysRow = document.createElement('tr')
+                    tableBody.appendChild(mainCalendarDaysRow)
+                }
+
+                if (i === 1 && monthFirstDay !== 0) {
+                    for (let j = monthFirstDay - 1; j >= 0; j--) {
+                        let dayNumber = prevMonthLastDayNumber - j
+
+                        let td = document.createElement('td')
+                        td.innerHTML = dayNumber
+                        td.className = 'prev-month'
+
+                        mainCalendarDaysRow.appendChild(td)
+                        weekCount++
+                    }
+                }
+
+                let td =  document.createElement('td')
+                if (i <= monthLastDayNumber) {
+                    td.innerHTML = i
+
+                    if (i === day) {
+                        td.className = 'today'
+                    }
+                } else {
+                    td.innerHTML = i - monthLastDayNumber
+                    td.className = 'next-month'
+                }
+
+                mainCalendarDaysRow.appendChild(td)
+                weekCount++
+            }
+
+            table.appendChild(tableHead)
+            table.appendChild(tableBody)
+
+            return table.outerHTML
+        }
+    </script>
+</head>
+
+<body>
+Day: <input id="day" type="number" value="4" />
+Month: <input id="month" type="number" value="9" />
+Year: <input id="year" type="number" value="2016" />
+<input type="button" value="Show"
+       onclick="let calendarHTML =
+            calendar([document.getElementById('day').value,
+                document.getElementById('month').value,
+                document.getElementById('year').value]);
+            document.getElementById('calendar').innerHTML = calendarHTML;
+            document.getElementById('calendarCode').innerText = calendarHTML" />
+<div class="title">Calendar:</div>
+<div id="calendar">Calendar will be shown here</div>
+<div class="title">HTML:</div>
+<textarea rows="12" id="calendarCode"></textarea>
+</body>
+
+</html>

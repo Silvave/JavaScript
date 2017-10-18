@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Town by Name</title>
+    <style>
+        select, input { width: 100px; }
+        h3 { padding: 0; margin: 5px 0;}
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="01-delete-towns-by-name.js"></script>
+</head>
+<body onload="attachEvents()">
+<div>Towns</div>
+<select id="towns" size="4">
+    <option>Sofia</option>
+    <option>Varna</option>
+    <option>Pleven</option>
+    <option>Varna</option>
+    <option>Sofia</option>
+    <option>Sofia</option>
+</select>
+<div>
+    <h3>Write the name of the town to delete it. (case sensitive)</h3>
+    <input type="text" id="townName" />
+    <button id="btnDelete">Delete</button>
+</div>
+<div id="result"></div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TextFromList</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <ul id="items">
+        <li>first item</li>
+        <li>second item</li>
+        <li>third item</li>
+        <li>boiko e pich</li>
+        <li>isacc sucks</li>
+    </ul>
+    <button onclick="extractText()">Extract text</button>
+    <div id="result"></div>
+<script>
+    function extractText() {
+        let items = $("ul#items li")
+                .toArray()
+                .map(li => li.textContent)
+                .join(`, `);
+        $(`#result`).text(items)
+    }
+</script>
+</body>
+</html>

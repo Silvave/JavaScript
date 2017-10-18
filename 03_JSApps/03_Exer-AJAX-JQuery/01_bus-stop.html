@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bus Stop</title>
+    <style>
+        #stopName {
+            font-size: 1.5em;
+            font-weight: 400;
+            padding: 0.25em;
+            background-color: aquamarine;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="stopInfo" style="width:20em">
+    <h2>Choose one of these bus stops:</h2>
+    <ul class="bus-stops">
+        <li class="bus-stop">1287</li>
+        <li class="bus-stop">1308</li>
+        <li class="bus-stop">1327</li>
+        <li class="bus-stop">2334</li>
+    </ul>
+    <div>
+        <label for="stopId">Stop ID: </label>
+        <input id="stopId" type="text">
+        <input id="submit" type="button" value="Check" onclick="getInfo()"></div>
+    <div id="result">
+        <div id="stopName"></div>
+        <ul id="buses"></ul>
+    </div>
+</div>
+<script>
+    function getInfo() {
+        let stopIdElem = $('#stopId')
+        let stopId = stopIdElem.val();
+
+        $('#buses').empty();
+        stopIdElem.val(``);
+
+        const stopIdUrl = `https://judgetests.firebaseio.com/businfo/${stopId}.json`;
+
+        function displayBusSchedule(stopData) {
+            $('#stopName').text(stopData.name);
+
+            for (let bus in stopData.buses) {
+                let text = `Bus ${bus} arrives in ${stopData.buses[bus]} minutes`;
+                let li = $('<li>').text(text);
+                li.appendTo($('#buses'));
+            }
+        }
+
+        function displayError(err) {
+            $('#stopName').text(`Error`)
+        }
+
+        return $.get(stopIdUrl)
+            .then(displayBusSchedule)
+            .catch(displayError);
+
+//        return $.ajax({
+//            method: "GET",
+//            url: stopIdUrl,
+//            success: displayBusSchedule,
+//            error: displayError
+//        });
+    }
+</script>
+</body>
+</html>

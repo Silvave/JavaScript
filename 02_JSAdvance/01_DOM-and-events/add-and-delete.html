@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Add / Remove Towns</title>
+    <style>select, input { width: 100px }</style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+    <h1>List of Items</h1>
+    <ul id="items"></ul>
+    <input type="text" id="newText" />
+    <input type="button" value="Add"
+           onclick="addItem()">
+
+    <script>
+        function addItem() {
+            let inputElem = $('#newText')
+            let text = inputElem.val() + ' '
+
+            inputElem.val('')
+
+            function deleteItem() {
+                $(this).parent().remove()
+                return false
+            }
+
+            let link = $('<a href="#"></a>')
+                .text('[Delete]')
+                .click(deleteItem)
+
+            let liElem = $('<li>').append(text, link)
+
+            $('#items').append(liElem)
+        }
+    </script>
+</body>
+</html>
